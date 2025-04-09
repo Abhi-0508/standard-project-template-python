@@ -1,2 +1,3 @@
-# standard-project-template-python
-Basic Template Repo for automating further repo creations
+# <<REPO_NAME>>
+
+Welcome to the <<REPO_NAME>> repository!

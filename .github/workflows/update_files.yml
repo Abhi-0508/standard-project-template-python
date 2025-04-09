@@ -1,0 +1,29 @@
+name: Update README and LICENSE
+
+on:
+  push:
+    - main
+    
+jobs:
+  update-files:
+    runs-on: ubuntu-latest
+    
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Replace Placeholders
+      run: |
+        repo_name=$(basename $GITHUB_REPOSITORY)
+        year=$(date + '%Y')
+        author="Abhishek Radhakrishnan"
+        sed -i "s/<<REPO_NAME>>/$repo_name/g" README.md
+        sed -i "s/<<YEAR>>/$year/g" LICENSE
+        sed -i "s/<<AUTHOR>>/$author/g" LICENSE
+        
+    - name: Commit changes
+      run: |
+        git config --global user.name 'my-automation-actions[bot]'
+        git config --global user.email 'my-automation-actions[bot]@noreply.com'
+        git commit -m "Auto-update README and LICENSE files with repository name, year and author information"
+        git push
