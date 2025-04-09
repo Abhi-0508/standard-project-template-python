@@ -32,6 +32,7 @@ jobs:
           else
             # ✅ Placeholders not found, skipping replacement
             echo "Placeholders not found."
+          fi
 
       # 💾 Step 3: Commit the changes made by placeholder replacement
       - name: Commit changes
