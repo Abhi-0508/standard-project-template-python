@@ -1,3 +1,3 @@
-# <<REPO_NAME>>
+# {{REPO_NAME}}
 
-Welcome to the <<REPO_NAME>> repository!
+Welcome to the {{REPO_NAME}} repository!

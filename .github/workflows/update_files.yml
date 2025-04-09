@@ -19,16 +19,16 @@ jobs:
       # 📝 Step 2: Search for placeholders and replace them if found    
       - name: Replace Placeholders
         run: |
-          if grep -q '<<REPO_NAME>>' README.md; then
+          if grep -q '{{REPO_NAME}}' README.md; then
             # Replacing placeholders found
             repo_name=$(basename $GITHUB_REPOSITORY)
             year=$(date +'%Y')
             author="Abhishek Radhakrishnan"
 
             # 🧩 Replace placeholders with actual values
-            sed -i "s/<<REPO_NAME>>/$repo_name/g" README.md
-            sed -i "s/<<YEAR>>/$year/g" LICENSE
-            sed -i "s/<<AUTHOR>>/$author/g" LICENSE
+            sed -i "s/{{REPO_NAME}}/$repo_name/g" README.md
+            sed -i "s/{{YEAR}}/$year/g" LICENSE
+            sed -i "s/{{AUTHOR}}/$author/g" LICENSE
           else
             # ✅ Placeholders not found, skipping replacement
             echo "Placeholders not found."
