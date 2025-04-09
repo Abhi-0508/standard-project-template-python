@@ -1,3 +1,3 @@
-# standard-project-template-python
+# {{REPO_NAME}}
 
-Welcome to the standard-project-template-python repository!
+Welcome to the {{REPO_NAME}} repository!

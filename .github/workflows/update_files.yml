@@ -1,6 +1,5 @@
 name: Update README and LICENSE
 
-# 🚀 Trigger: Run this workflow on push to main branch
 on:
   push:
     branches:
@@ -8,23 +7,25 @@ on:
 
 permissions:
   contents: write
-  
+
 jobs:
   update-files:
-    # 🖥️ Runner environment
+    # ✅ Skip running in the template repository itself
+    if: ${{ github.repository != 'Abhi-0508/standard-project-template-python' }}
+
     runs-on: ubuntu-latest
 
     steps:
-      # 📥 Step 1: Checkout the repository code
+      # 📥 Step 1: Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 🚦 Step 2: Check if this is an automation commit to prevent loops
+      # 🚦 Step 2: Prevent loop from bot commits
       - name: Prevent loop - skip if bot commit
         if: "${{ !startsWith(github.event.head_commit.message, 'Auto-update') }}"
         run: echo "✅ Not a bot commit, proceeding."
 
-      # 📝 Step 3: Replace placeholders if they exist
+      # 📝 Step 3: Replace placeholders
       - name: Replace Placeholders
         if: "${{ !startsWith(github.event.head_commit.message, 'Auto-update') }}"
         run: |
@@ -41,17 +42,15 @@ jobs:
             echo "✅ No placeholders found, skipping replacement."
           fi
 
-      # 💾 Step 4: Stage and commit changes if any
+      # 💾 Step 4: Commit changes
       - name: Commit changes
         if: "${{ !startsWith(github.event.head_commit.message, 'Auto-update') }}"
         run: |
           git config --global user.name 'my-automation-actions[bot]'
           git config --global user.email 'my-automation-actions[bot]@noreply.com'
 
-          # Stage modified files
           git add README.md LICENSE || echo "✅ No files to add."
 
-          # Check if there is anything to commit
           if git diff --cached --quiet; then
             echo "✅ No changes to commit."
           else
