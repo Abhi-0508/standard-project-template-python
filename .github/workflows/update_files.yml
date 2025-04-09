@@ -3,41 +3,42 @@ name: Update README and LICENSE
 # 🚀 Trigger: Run this workflow on any push to the main branch
 on:
   push:
-    - main
+    branches:
+      - main
     
 jobs:
   update-files:
     # 🖥️ Define the runner environment
     runs-on: ubuntu-latest
     
-  steps:
-    # 📥 Step 1: Checkout the repository code to the runner
-    - name: Checkout code
-      uses: actions/checkout@v4
+    steps:
+      # 📥 Step 1: Checkout the repository code to the runner
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    # 📝 Step 2: Search for placeholders and replace them if found    
-    - name: Replace Placeholders
-      run: |
-        if grep -q '<<REPO_NAME>>' README.md; then
-          # Replacing placeholders found
-          repo_name=$(basename $GITHUB_REPOSITORY)
-          year=$(date +'%Y')
-          author="Abhishek Radhakrishnan"
+      # 📝 Step 2: Search for placeholders and replace them if found    
+      - name: Replace Placeholders
+        run: |
+          if grep -q '<<REPO_NAME>>' README.md; then
+            # Replacing placeholders found
+            repo_name=$(basename $GITHUB_REPOSITORY)
+            year=$(date +'%Y')
+            author="Abhishek Radhakrishnan"
 
-          # 🧩 Replace placeholders with actual values
-          sed -i "s/<<REPO_NAME>>/$repo_name/g" README.md
-          sed -i "s/<<YEAR>>/$year/g" LICENSE
-          sed -i "s/<<AUTHOR>>/$author/g" LICENSE
-        else
-          # ✅ Placeholders not found, skipping replacement
-          echo "Placeholders not found."
+            # 🧩 Replace placeholders with actual values
+            sed -i "s/<<REPO_NAME>>/$repo_name/g" README.md
+            sed -i "s/<<YEAR>>/$year/g" LICENSE
+            sed -i "s/<<AUTHOR>>/$author/g" LICENSE
+          else
+            # ✅ Placeholders not found, skipping replacement
+            echo "Placeholders not found."
 
-    # 💾 Step 3: Commit the changes made by placeholder replacement
-    - name: Commit changes
-      run: |
-        git config --global user.name 'my-automation-actions[bot]'
-        git config --global user.email 'my-automation-actions[bot]@noreply.com'
+      # 💾 Step 3: Commit the changes made by placeholder replacement
+      - name: Commit changes
+        run: |
+          git config --global user.name 'my-automation-actions[bot]'
+          git config --global user.email 'my-automation-actions[bot]@noreply.com'
 
-        # 📦 Commit and push the changes back to the repository
-        git commit -m "Auto-update README and LICENSE files with repository name, year and author information"
-        git push
+          # 📦 Commit and push the changes back to the repository
+          git commit -m "Auto-update README and LICENSE files with repository name, year and author information"
+          git push
